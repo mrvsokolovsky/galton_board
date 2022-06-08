@@ -52,6 +52,9 @@ def main():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 time.set_timer(pygame.event.Event(create_ball), 250, 100)
 
+
+
+
         space_setup.draw_window(space, WIN, draw_options)
         space.step(dt)
 
