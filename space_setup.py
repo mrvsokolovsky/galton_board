@@ -9,6 +9,10 @@ def draw_window(space, window, draw_options):
     """ creates a window with white background"""
     window.fill(const.WHITE)
     space.debug_draw(draw_options)
+    pygame.draw.line(start_pos=(const.WIDTH // 2, 0),
+                     end_pos=(const.WIDTH // 2, const.HEIGHT),
+                     color=const.RED,
+                     surface=window)
     pygame.display.update()
 
 
@@ -27,8 +31,8 @@ def create_boundaries(space, width, height):
         body = pymunk.Body(body_type=pymunk.Body.STATIC)
         body.position = pos
         shape = pymunk.Poly.create_box(body, size)
-        shape.elasticity = 0.2  # arbitrary values for elasticity
-        shape.friction = 0.6  # and friction (making the simulation more realistic)
+        shape.elasticity = 0.1  # arbitrary values for elasticity
+        shape.friction = 0.7  # and friction (making the simulation more realistic)
         space.add(body, shape)
 
 
@@ -36,24 +40,24 @@ def draw_obstacles(space, width, height):
     """creates the obstacles that make the ball change
     trajectory"""
     row_num = 1
-    for i in range(50, width - 50, 38):
-        for j in range(75, height - 250, 50):
+    for i in range(50, width - 50, width // 45):
+        for j in range(75, height - 225, height // 20):
             if row_num % 2 == 0 and j < width - 15:
                 body = pymunk.Body(body_type=pymunk.Body.STATIC)
                 body.position = (i, j + 15)
-                shape = pymunk.Circle(body, radius=8)
+                shape = pymunk.Circle(body, radius=5)
                 shape.mass = 10
                 shape.color = (0, 0, 0, 100)
-                shape.elasticity = 0.4
+                shape.elasticity = 0.6
                 shape.friction = 0.4
                 space.add(body, shape)
             else:
                 body = pymunk.Body(body_type=pymunk.Body.STATIC)
                 body.position = (i, j)
-                shape = pymunk.Circle(body, radius=8)
+                shape = pymunk.Circle(body, radius=5)
                 shape.mass = 10
                 shape.color = (0, 0, 0, 100)
-                shape.elasticity = 0.9
+                shape.elasticity = 0.6
                 shape.friction = 0.4
                 space.add(body, shape)
         row_num += 1

@@ -1,10 +1,7 @@
 import pygame
 import pymunk
 import pymunk.pygame_util
-import numpy as np
 from pygame import time
-import keyboard
-
 import constants as const
 import space_setup
 
@@ -20,6 +17,7 @@ def main():
     # with constant FPS
     clock = pygame.time.Clock()
     run = True
+
     # one delta-time that we use to make one step
     # every 1/60 of a second
     dt = 1 / const.FPS
@@ -30,11 +28,12 @@ def main():
     space.gravity = (0, 981)
     space_setup.create_boundaries(space, const.WIDTH, const.HEIGHT)
     space_setup.draw_obstacles(space, const.WIDTH, const.HEIGHT)
-    space_setup.draw_bins(space, const.WIDTH, const.HEIGHT, 21)  # making 21 bins for now
+    space_setup.draw_bins(space, const.WIDTH, const.HEIGHT, 22)  # making 22 bins for now
 
     draw_options = pymunk.pygame_util.DrawOptions(WIN)
     create_ball = pygame.USEREVENT + 1
-        # main event loop
+
+    # main event loop
     while run:
         clock.tick(const.FPS)
         for event in pygame.event.get():
@@ -48,12 +47,10 @@ def main():
                                         const.BALL_ELASTICITY,
                                         const.BALL_FRICTION)
                 ball.add(space)
-            # if user clicks a mouse button, we drop 100 balls, each after 250 milliseconds
+
+            # if user clicks a mouse button, we drop 100 balls, each after 400 milliseconds
             elif event.type == pygame.MOUSEBUTTONDOWN:
-                time.set_timer(pygame.event.Event(create_ball), 250, 100)
-
-
-
+                time.set_timer(pygame.event.Event(create_ball), 400, 100)
 
         space_setup.draw_window(space, WIN, draw_options)
         space.step(dt)
